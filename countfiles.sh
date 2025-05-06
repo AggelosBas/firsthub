@@ -1,1 +1,3 @@
-ls | wc -l
+#!/bin/bash
+
+find . | wc -l
