@@ -1,0 +1,3 @@
+#ls -t ,awk 'NF && !/^$/'
+
+ls -AmtF| tr -d ""
