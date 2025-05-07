@@ -3,10 +3,10 @@ package main
 import "fmt"
 
 func PrintComb() {
-for i := 0; i <= 7; i++ {
-    for j := i + 1; j <= 8; j++ {
-        for k := j + 1; k <= 9; k++ {
-            if i != 9 || j != 8 || k != 9 {
+    for i := 0; i <= 7; i++ {
+        for j := i + 1; j <= 8; j++ {
+            for k := j + 1; k <= 9; k++ {
+                if i != 9 || j != 8 || k != 9 {
                     fmt.Printf("%d%d%d, ", i, j, k)
                 } else {
                     fmt.Printf("%d%d%d", i, j, k)
@@ -17,6 +17,5 @@ for i := 0; i <= 7; i++ {
 }
 
 func main() {
-PrintComb()
-
+    PrintComb()
 }
