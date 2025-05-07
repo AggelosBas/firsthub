@@ -17,6 +17,6 @@ func PrintComb() {
 }
 
 func main() {
-    PrintComb()
-	
+ PrintComb()
+
 }
