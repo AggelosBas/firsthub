@@ -1,6 +1,6 @@
 package main
 
-import "piscine-go/isnegative"
+import "github.com/01-edu/z01"
 
 func IsNegative(n int) {
 	if n < 0 {
@@ -9,4 +9,8 @@ func IsNegative(n int) {
 		z01.PrintRune('F')
 	}
 	z01.PrintRune('\n')
+}
+func main() {
+	IsNegative(5)
+	IsNegative(-50)
 }
