@@ -1,4 +1,4 @@
-package 
+package stude
 
 import "github.com/01-edu/z01"
 
