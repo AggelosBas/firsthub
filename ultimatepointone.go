@@ -1,5 +1,6 @@
-package student
+package piscine
 
 func UltimatePointOne(n ***int) {
-	***n = 1
+    // Αποσυμπιέζουμε τους τρεις δείκτες και αναθέτουμε την τιμή 1
+    ***n = 1
 }
