@@ -9,3 +9,15 @@ func RecursiveFactorial(n int) int {
 	}
 	return n * RecursiveFactorial(n-1)
 }
+
+package main
+
+import (
+	"fmt"
+	"student"
+)
+
+func main() {
+	arg := 4
+	fmt.Println(student.RecursiveFactorial(arg))
+}
