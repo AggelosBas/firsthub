@@ -1,23 +1,11 @@
-package student
+package piscine
 
-func RecursiveFactorial(n int) int {
-	if n < 0 || n > 20 {
+func RecursiveFactorial(nb int) int {
+	if nb < 0 || nb > 20 {
 		return 0
 	}
-	if n == 0 {
+	if nb == 0 {
 		return 1
 	}
-	return n * RecursiveFactorial(n-1)
-}
-
-package main
-
-import (
-	"fmt"
-	"student"
-)
-
-func main() {
-	arg := 4
-	fmt.Println(student.RecursiveFactorial(arg))
+	return nb * RecursiveFactorial(nb-1)
 }
