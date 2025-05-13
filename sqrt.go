@@ -1,16 +1,14 @@
 package student
 
-import (
-	"math"
-)
-
 func Sqrt(nb int) int {
 	if nb < 0 {
 		return 0
 	}
-	sqrt := math.Sqrt(float64(nb))
-	if sqrt == math.Floor(sqrt) {
-		return int(sqrt)
+
+	for i := 0; i*i <= nb; i++ {
+		if i*i == nb {
+			return i
+		}
 	}
 	return 0
 }
