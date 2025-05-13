@@ -12,16 +12,3 @@ func Fibonacci(index int) int {
 	}
 	return Fibonacci(index-1) + Fibonacci(index-2)
 }
-
-
-package main
-
-import (
-	"fmt"
-	"piscine"
-)
-
-func main() {
-	arg1 := 4
-	fmt.Println(piscine.Fibonacci(arg1))
-}
