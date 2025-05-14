@@ -1,6 +1,6 @@
 package student
 
-func Nrune(s string ,n int) rune {
+func Nrune(s string, n int) rune {
 	if n < 0 {
 		return 0
 	}
