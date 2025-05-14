@@ -1,7 +1,7 @@
 package student
 
 func FirstRune(s string) rune {
-	for_, r := range s {
+	for _, r := range s {
 		return r
 	}
     return 0
