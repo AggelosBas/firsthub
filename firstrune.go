@@ -1,5 +1,8 @@
-package piscine
+package student
 
 func FirstRune(s string) rune {
-    return rune(s[0])
+	for_, r := range s {
+		return r
+	}
+    return 0
 }
