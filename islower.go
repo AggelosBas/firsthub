@@ -1,6 +1,6 @@
 package student
 
-func Islower(s string) bool {
+func IsLower(s string) bool {
 	if len(s) == 0 {
 		return false
 	}
