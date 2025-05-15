@@ -1,22 +1,23 @@
 package student
 
 func Split(s, sep string) []string {
-	var result []string
-	sepLen := len(sep)
-	i := 0
+	var result []string // Αποθήκευση αποτελεσμάτων
+	sepLen := len(sep)  // Μήκος separator π.χ. "HA" = 2
+	start := 0          // Αρχική θέση για κάθε κομμάτι
 
-	for i <= len(s)-sepLen {
-		j := i
-		for j <= len(s)-sepLen && s[j:j+sepLen] != sep {
-			j++
+	for i := 0; i <= len(s)-sepLen; {
+		if s[i:i+sepLen] == sep {
+			result = append(result, s[start:i]) // Προσθέτουμε ό,τι βρήκαμε μέχρι τώρα
+			i += sepLen                         // Προχωράμε μετά τον separator
+			start = i                           // Νέα αρχή
+		} else {
+			i++
 		}
-		result = append(result, s[i:j])
-		i = j + sepLen
 	}
 
-	// Προσθέτουμε το υπόλοιπο μετά το τελευταίο sep
-	if i <= len(s) {
-		result = append(result, s[i:])
+	// Τελευταίο κομμάτι που απομένει (ό,τι είναι μετά το τελευταίο separator)
+	if start <= len(s) {
+		result = append(result, s[start:])
 	}
 
 	return result
