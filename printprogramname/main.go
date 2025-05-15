@@ -9,4 +9,3 @@ import (
 func main() {
 	fmt.Println(filepath.Base(os.Args[0]))
 }
-
