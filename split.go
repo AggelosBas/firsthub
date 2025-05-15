@@ -5,23 +5,18 @@ func Split(s, sep string) []string {
 	sepLen := len(sep)
 	i := 0
 
-	for i < len(s) {
+	for i <= len(s)-sepLen {
 		j := i
-		// Προχωράμε μέχρι να βρούμε το sep ή να φτάσουμε στο τέλος
 		for j <= len(s)-sepLen && s[j:j+sepLen] != sep {
 			j++
 		}
-
-		// Προσθέτουμε τη λέξη που βρέθηκε
 		result = append(result, s[i:j])
-
-		// Αν φτάσαμε στο τέλος, σταματάμε
-		if j > len(s)-sepLen {
-			break
-		}
-
-		// Προχωράμε μετά το sep
 		i = j + sepLen
+	}
+
+	// Προσθέτουμε το υπόλοιπο μετά το τελευταίο sep
+	if i <= len(s) {
+		result = append(result, s[i:])
 	}
 
 	return result
