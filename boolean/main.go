@@ -1,8 +1,7 @@
 package main
 
 import (
-	"os"
-
+	
 	"github.com/01-edu/z01"
 )
 
@@ -14,7 +13,7 @@ func printStr(s string) {
 }
 
 func isEven(nbr int) bool {
-	return nbr%2 == 0
+return nbr%2 == 0
 }
 
 func main() {
