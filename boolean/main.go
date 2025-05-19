@@ -28,4 +28,3 @@ func main() {
 		printStr(OddMsg)
 	}
 }
-
