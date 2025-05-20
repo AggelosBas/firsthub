@@ -3,29 +3,34 @@ package main
 import (
 	"io"
 	"os"
+
 	"github.com/01-edu/z01"
 )
 
-func printErr(s string) {
+func printRuneByRune(s string) {
 	for _, r := range s {
 		z01.PrintRune(r)
 	}
+}
+
+func printError(err error) {
+	printRuneByRune("ERROR: ")
+	printRuneByRune(err.Error())
 	z01.PrintRune('\n')
 }
 
-func printFromReader(reader io.Reader) {
-	buf := make([]byte, 1024)
+func printFile(file *os.File) {
+	buf := make([]byte, 1)
 	for {
-		n, err := reader.Read(buf)
+		n, err := file.Read(buf)
 		if n > 0 {
-			for _, b := range buf[:n] {
-				z01.PrintRune(rune(b))
-			}
+			z01.PrintRune(rune(buf[0]))
 		}
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
+			printError(err)
 			break
 		}
 	}
@@ -35,17 +40,17 @@ func main() {
 	args := os.Args[1:]
 
 	if len(args) == 0 {
-		// Χωρίς όρισμα: διάβασε από stdin
-		printFromReader(os.Stdin)
-	} else {
-		for _, filename := range args {
-			file, err := os.Open(filename)
-			if err != nil {
-				printErr("ERROR: " + err.Error())
-				os.Exit(1)
-			}
-			printFromReader(file)
-			file.Close()
+		printFile(os.Stdin)
+		return
+	}
+
+	for _, filename := range args {
+		file, err := os.Open(filename)
+		if err != nil {
+			printError(err)
+			os.Exit(1)
 		}
+		printFile(file)
+		file.Close()
 	}
 }
