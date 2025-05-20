@@ -1,44 +1,112 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"strconv"
+    "os"
 )
 
+func Atoi(s string) (int64, bool) {
+    var res int64 = 0
+    sign := int64(1)
+    i := 0
+
+    if len(s) == 0 {
+        return 0, false
+    }
+
+    if s[0] == '-' {
+        sign = -1
+        i++
+    } else if s[0] == '+' {
+        i++
+    }
+
+    for ; i < len(s); i++ {
+        if s[i] < '0' || s[i] > '9' {
+            return 0, false
+        }
+        res = res*10 + int64(s[i]-'0')
+    }
+
+    return res * sign, true
+}
+
+func Itoa(n int64) string {
+    if n == 0 {
+        return "0"
+    }
+
+    sign := ""
+    if n < 0 {
+        sign = "-"
+        n = -n
+    }
+
+    var res [20]byte
+    i := len(res)
+
+    for n > 0 {
+        i--
+        res[i] = byte(n%10) + '0'
+        n /= 10
+    }
+
+    return sign + string(res[i:])
+}
+
+func Println(s string) {
+    os.Stdout.Write([]byte(s))
+    os.Stdout.Write([]byte{'\n'})
+}
+
 func main() {
-	if len(os.Args) != 4 {
-		return
-	}
+    if len(os.Args) != 4 {
+        return
+    }
 
-	a, err1 := strconv.Atoi(os.Args[1])
-	op := os.Args[2]
-	b, err2 := strconv.Atoi(os.Args[3])
+    aStr := os.Args[1]
+    op := os.Args[2]
+    bStr := os.Args[3]
 
-	if err1 != nil || err2 != nil {
-		return
-	}
+    a, ok1 := Atoi(aStr)
+    b, ok2 := Atoi(bStr)
 
-	switch op {
-	case "+":
-		fmt.Println(a + b)
-	case "-":
-		fmt.Println(a - b)
-	case "*":
-		fmt.Println(a * b)
-	case "/":
-		if b == 0 {
-			fmt.Println("No division by 0")
-			return
-		}
-		fmt.Println(a / b)
-	case "%":
-		if b == 0 {
-			fmt.Println("No modulo by 0")
-			return
-		}
-		fmt.Println(a % b)
-	default:
-		return
-	}
+    if !ok1 || !ok2 {
+        return
+    }
+
+    switch op {
+    case "+":
+        res := a + b
+        // Προσπαθούμε απλή προστασία από overflow
+        if (a > 0 && b > 0 && res < 0) || (a < 0 && b < 0 && res > 0) {
+            return
+        }
+        Println(Itoa(res))
+    case "-":
+        res := a - b
+        if (a > 0 && b < 0 && res < 0) || (a < 0 && b > 0 && res > 0) {
+            return
+        }
+        Println(Itoa(res))
+    case "*":
+        res := a * b
+        if b != 0 && res/b != a {
+            return
+        }
+        Println(Itoa(res))
+    case "/":
+        if b == 0 {
+            Println("No division by 0")
+            return
+        }
+        Println(Itoa(a / b))
+    case "%":
+        if b == 0 {
+            Println("No modulo by 0")
+            return
+        }
+        Println(Itoa(a % b))
+    default:
+        return
+    }
 }
