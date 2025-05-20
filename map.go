@@ -1,3 +1,5 @@
+package student
+
 func Map(f func(int) bool, a []int) []bool {
 	result := make ([]bool, len(a))
 	for i, v := range a {
