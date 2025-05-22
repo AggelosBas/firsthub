@@ -1,17 +1,10 @@
 package student
 
 func ShoppingSummaryCounter(str string) map[string]int {
-	counts := make(map[string]int)
-	word := ""
-	for i := 0; i <= len(str); i++ {
-		if i == len(str) || str[i] == ' ' {
-			if word != "" {
-				counts[word]++
-				word = ""
-			}
-		} else {
-			word += string(str[i])
-		}
+	counts := Split(str, " ")
+	count := make(map[string]int)
+	for _, word := range words {
+		count[word]++
 	}
 	return counts
 }
