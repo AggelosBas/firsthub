@@ -1,21 +1,12 @@
 package student
 
+import "strings"
+
 func ShoppingSummaryCounter(str string) map[string]int {
 	result := make(map[string]int)
-	word := ""
+	words := strings.Fields(str)
 
-	for i := 0; i < len(str); i++ {
-		if str[i] != ' ' {
-			word += string(str[i])
-		} else {
-			if word != "" {
-				result[word]++
-				word = ""
-			}
-		}
-	}
-
-	if word != "" {
+	for _, word := range words {
 		result[word]++
 	}
 
