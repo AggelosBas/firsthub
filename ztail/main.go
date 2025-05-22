@@ -3,47 +3,69 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
 )
 
+func Atoi(s string) (int, bool) {
+	n := 0
+	for i := 0; i < len(s); i++ {
+		if s[i] < '0' || s[i] > '9' {
+			return 0, false
+		}
+		n = n*10 + int(s[i]-'0')
+	}
+	return n, true
+}
+
 func main() {
-	if len(os.Args) < 4 || os.Args[1] != "-c" {
-		fmt.Println("Usage: go run . -c <number> <file1> [<file2> ...]")
+	args := os.Args
+	if len(args) < 4 || args[1] != "-c" {
 		os.Exit(1)
 	}
 
-	count, err := strconv.Atoi(os.Args[2])
-	if err != nil || count < 0 {
-		fmt.Println("Invalid byte count")
+	count, ok := Atoi(args[2])
+	if !ok {
 		os.Exit(1)
 	}
 
-	files := os.Args[3:]
-	hasError := false
+	files := args[3:]
+	hadError := false
 
-	for i, fileName := range files {
-		content, err := os.ReadFile(fileName)
+	for i, name := range files {
+		file, err := os.Open(name)
 		if err != nil {
-			fmt.Println("open", fileName+":", err.Error())
-			hasError = true
+			fmt.Printf("open %s: %s\n", name, err)
+			hadError = true
 			continue
 		}
+
+		info, err := file.Stat()
+		if err != nil {
+			fmt.Printf("open %s: %s\n", name, err)
+			hadError = true
+			file.Close()
+			continue
+		}
+
+		size := info.Size()
+		offset := int64(0)
+		if size > int64(count) {
+			offset = size - int64(count)
+		}
+
+		buf := make([]byte, count)
+		n, err := file.ReadAt(buf, offset)
+		file.Close()
 
 		if len(files) > 1 {
 			if i > 0 {
 				fmt.Println()
 			}
-			fmt.Printf("==> %s <==\n", fileName)
+			fmt.Printf("==> %s <==\n", name)
 		}
-
-		if len(content) < count {
-			fmt.Print(string(content))
-		} else {
-			fmt.Print(string(content[len(content)-count:]))
-		}
+		fmt.Printf("%s", buf[:n])
 	}
 
-	if hasError {
+	if hadError {
 		os.Exit(1)
 	}
 }
