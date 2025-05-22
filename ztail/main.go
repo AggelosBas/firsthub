@@ -3,29 +3,29 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func main() {
 	if len(os.Args) < 4 || os.Args[1] != "-c" {
-		fmt.Println("Usage: go run . -c <number> <file1> [file2] ...")
+		fmt.Println("Usage: go run . -c <number> <file1> [<file2> ...]")
 		os.Exit(1)
 	}
 
-	n := 0
-	_, err := fmt.Sscanf(os.Args[2], "%d", &n)
-	if err != nil || n <= 0 {
+	count, err := strconv.Atoi(os.Args[2])
+	if err != nil || count < 0 {
 		fmt.Println("Invalid byte count")
 		os.Exit(1)
 	}
 
 	files := os.Args[3:]
-	exitCode := 0
+	hasError := false
 
-	for i, name := range files {
-		data, err := os.ReadFile(name)
+	for i, fileName := range files {
+		content, err := os.ReadFile(fileName)
 		if err != nil {
-			fmt.Printf("open %s: %v\n", name, err)
-			exitCode = 1
+			fmt.Println("open", fileName+":", err.Error())
+			hasError = true
 			continue
 		}
 
@@ -33,15 +33,17 @@ func main() {
 			if i > 0 {
 				fmt.Println()
 			}
-			fmt.Printf("==> %s <==\n", name)
+			fmt.Printf("==> %s <==\n", fileName)
 		}
 
-		start := len(data) - n
-		if start < 0 {
-			start = 0
+		if len(content) < count {
+			fmt.Print(string(content))
+		} else {
+			fmt.Print(string(content[len(content)-count:]))
 		}
-		fmt.Printf("%s", data[start:])
 	}
 
-	os.Exit(exitCode)
+	if hasError {
+		os.Exit(1)
+	}
 }
