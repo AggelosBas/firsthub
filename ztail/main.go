@@ -5,67 +5,45 @@ import (
 	"os"
 )
 
-func Atoi(s string) (int, bool) {
-	n := 0
-	for i := 0; i < len(s); i++ {
-		if s[i] < '0' || s[i] > '9' {
-			return 0, false
-		}
-		n = n*10 + int(s[i]-'0')
-	}
-	return n, true
-}
-
 func main() {
-	args := os.Args
-	if len(args) < 4 || args[1] != "-c" {
-		os.Exit(1)
+	if len(os.Args) < 4 || os.Args[1] != "-c" {
+		return
 	}
 
-	count, ok := Atoi(args[2])
-	if !ok {
-		os.Exit(1)
+	byteCount := 0
+	for _, ch := range os.Args[2] {
+		if ch < '0' || ch > '9' {
+			return
+		}
+		byteCount = byteCount*10 + int(ch-'0')
 	}
 
-	files := args[3:]
-	hadError := false
+	files := os.Args[3:]
+	errorOccurred := false
 
-	for i, name := range files {
-		file, err := os.Open(name)
+	for i, file := range files {
+		content, err := os.ReadFile(file)
 		if err != nil {
-			fmt.Printf("open %s: %s\n", name, err)
-			hadError = true
+			fmt.Println(err)
+			errorOccurred = true
 			continue
 		}
-
-		info, err := file.Stat()
-		if err != nil {
-			fmt.Printf("open %s: %s\n", name, err)
-			hadError = true
-			file.Close()
-			continue
-		}
-
-		size := info.Size()
-		offset := int64(0)
-		if size > int64(count) {
-			offset = size - int64(count)
-		}
-
-		buf := make([]byte, count)
-		n, err := file.ReadAt(buf, offset)
-		file.Close()
 
 		if len(files) > 1 {
 			if i > 0 {
 				fmt.Println()
 			}
-			fmt.Printf("==> %s <==\n", name)
+			fmt.Printf("==> %s <==\n", file)
 		}
-		fmt.Printf("%s", buf[:n])
+
+		if byteCount > len(content) {
+			fmt.Print(string(content))
+		} else {
+			fmt.Print(string(content[len(content)-byteCount:]))
+		}
 	}
 
-	if hadError {
+	if errorOccurred {
 		os.Exit(1)
 	}
 }
