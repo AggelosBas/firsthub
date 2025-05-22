@@ -1,7 +1,7 @@
 package student
 
 func DescendAppendRange(max, min int) []int {
-	var result []int
+	result := []int{} // Κενό slice, όχι nil
 
 	if max <= min {
 		return result
