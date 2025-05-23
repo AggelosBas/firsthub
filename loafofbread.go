@@ -1,7 +1,7 @@
 package student
 
 func LoafOfBread(str string) string {
-	// Βήμα 1: φτιάξε string χωρίς κενά
+	// Αφαίρεση των κενών
 	cleaned := ""
 	for _, r := range str {
 		if r != ' ' {
@@ -9,20 +9,28 @@ func LoafOfBread(str string) string {
 		}
 	}
 
-	// Αν έχει λιγότερους από 5 χαρακτήρες, return
 	if len(cleaned) < 5 {
 		return "Invalid Output\n"
 	}
 
-	// Βήμα 2: πάρε ομάδες των 5 και skip 1
 	result := ""
 	i := 0
 	for i+5 <= len(cleaned) {
 		result += cleaned[i:i+5] + " "
-		i += 6 // 5 + skip 1
+		i += 6 // μετά από 5 γράμματα, skip 1
 	}
 
-	// Βήμα 3: αφαίρεσε το τελευταίο κενό και βάλε \n
-	result = result[:len(result)-1] + "\n"
-	return result
+	// Αν περισσεύει κάτι στο τέλος που δεν έγινε πεντάδα
+	if i-1 < len(cleaned) {
+		// Προσθέτουμε ό,τι μένει (όχι άλλο skip)
+		remaining := cleaned[i-1:]
+		result += remaining
+	}
+
+	// Αφαίρεση τελευταίου κενού αν υπάρχει
+	if result[len(result)-1] == ' ' {
+		result = result[:len(result)-1]
+	}
+
+	return result + "\n"
 }
