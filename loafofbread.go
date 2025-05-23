@@ -1,4 +1,4 @@
-package piscine
+package student
 
 func LoafOfBread(str string) string {
 	s := []rune(str)
