@@ -1,49 +1,32 @@
 package student
 
-import "github.com/01-edu/z01"
-
-func LoafOfBread(str string) {
-	// Αφαιρούμε τα κενά και μετράμε τους χαρακτήρες
-	count := 0
+func LoafOfBread(str string) string {
+	// Βήμα 1: Αφαίρεση των spaces
+	clean := ""
 	for _, r := range str {
 		if r != ' ' {
-			count++
+			clean += string(r)
 		}
 	}
 
-	if count < 5 {
-		for _, r := range "Invalid Output\n" {
-			z01.PrintRune(r)
-		}
-		return
+	// Αν είναι κάτω από 5 χαρακτήρες, return
+	if len(clean) < 5 {
+		return "Invalid Output\n"
 	}
 
-	word := ""
-	skipNext := false
-	letterCount := 0
+	result := ""
+	i := 0
 
-	for _, r := range str {
-		if r == ' ' {
-			continue
-		}
-		if skipNext {
-			skipNext = false
-			continue
-		}
-
-		word += string(r)
-		letterCount++
-
-		if letterCount == 5 {
-			for _, ch := range word {
-				z01.PrintRune(ch)
-			}
-			z01.PrintRune(' ')
-			word = ""
-			letterCount = 0
-			skipNext = true
-		}
+	for i+5 <= len(clean) {
+		// Παίρνουμε 5 χαρακτήρες
+		result += clean[i:i+5] + " "
+		i += 6 // Παραλείπουμε τον 6ο χαρακτήρα
 	}
 
-	z01.PrintRune('\n')
+	// Αφαιρούμε το τελευταίο space (αν υπάρχει) και προσθέτουμε newline
+	if len(result) > 0 && result[len(result)-1] == ' ' {
+		result = result[:len(result)-1]
+	}
+
+	return result + "\n"
 }
