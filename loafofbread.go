@@ -3,7 +3,7 @@ package student
 import "github.com/01-edu/z01"
 
 func LoafOfBread(str string) {
-	// Αφαίρεσε τα κενά
+	// Καθαρίζουμε τα spaces
 	clean := ""
 	for _, r := range str {
 		if r != ' ' {
@@ -12,22 +12,20 @@ func LoafOfBread(str string) {
 	}
 
 	if len(clean) < 5 {
-		msg := "Invalid Output\n"
-		for _, r := range msg {
+		for _, r := range "Invalid Output\n" {
 			z01.PrintRune(r)
 		}
 		return
 	}
 
-	i := 0
-	count := 0
-	for i+5 <= len(clean) {
-		for _, r := range clean[i : i+5] {
+	// Επεξεργασία 5 χαρακτήρων και skip 1
+	for i := 0; i+5 <= len(clean); i += 6 {
+		word := clean[i : i+5]
+		for _, r := range word {
 			z01.PrintRune(r)
 		}
-		count++
-		i += 6 // 5 χαρακτήρες + 1 skip
-		if i+5 <= len(clean) {
+		// Αν υπάρχει άλλος διαθέσιμος χαρακτήρας για νέο block, βάλε space
+		if i+6+4 < len(clean) {
 			z01.PrintRune(' ')
 		}
 	}
