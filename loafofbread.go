@@ -1,8 +1,6 @@
 package student
 
-import "github.com/01-edu/z01"
-
-func LoafOfBread(str string) {
+func LoafOfBread(str string) string {
 	// Καθαρίζουμε τα spaces
 	clean := ""
 	for _, r := range str {
@@ -12,22 +10,17 @@ func LoafOfBread(str string) {
 	}
 
 	if len(clean) < 5 {
-		for _, r := range "Invalid Output\n" {
-			z01.PrintRune(r)
-		}
-		return
+		return "Invalid Output\n"
 	}
 
-	// Επεξεργασία 5 χαρακτήρων και skip 1
+	result := ""
 	for i := 0; i+5 <= len(clean); i += 6 {
-		word := clean[i : i+5]
-		for _, r := range word {
-			z01.PrintRune(r)
-		}
-		// Αν υπάρχει άλλος διαθέσιμος χαρακτήρας για νέο block, βάλε space
+		result += clean[i : i+5]
+		// Πρόσθεσε space αν υπάρχουν άλλα 5 χαρακτήρες μετά
 		if i+6+4 < len(clean) {
-			z01.PrintRune(' ')
+			result += " "
 		}
 	}
-	z01.PrintRune('\n')
+	result += "\n"
+	return result
 }
