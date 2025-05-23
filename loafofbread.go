@@ -1,7 +1,9 @@
 package student
 
-func LoafOfBread(str string) string {
-	// Αν η είσοδος έχει λιγότερους από 5 μη-space χαρακτήρες
+import "github.com/01-edu/z01"
+
+func LoafOfBread(str string) {
+	// Count non-space characters
 	count := 0
 	for _, r := range str {
 		if r != ' ' {
@@ -9,38 +11,40 @@ func LoafOfBread(str string) string {
 		}
 	}
 	if count < 5 {
-		return "Invalid Output\n"
+		printStr("Invalid Output\n")
+		return
 	}
 
-	result := ""
+	letterCount := 0
+	skip := false
 	word := ""
-	skipNext := false
-	nonSpaceCount := 0
 
 	for _, r := range str {
-		if skipNext {
-			skipNext = false
-			continue
-		}
-
 		if r == ' ' {
 			continue
 		}
-
+		if skip {
+			skip = false
+			continue
+		}
 		word += string(r)
-		nonSpaceCount++
-
-		if nonSpaceCount == 5 {
-			result += word + " "
+		letterCount++
+		if letterCount == 5 {
+			printStr(word)
+			z01.PrintRune(' ')
 			word = ""
-			nonSpaceCount = 0
-			skipNext = true
+			letterCount = 0
+			skip = true
 		}
 	}
 
-	if len(result) > 0 && result[len(result)-1] == ' ' {
-		result = result[:len(result)-1]
-	}
+	// Τυπώνουμε newline
+	z01.PrintRune('\n')
+}
 
-	return result + "\n"
+// Helper function to print a string with z01.PrintRune
+func printStr(s string) {
+	for _, r := range s {
+		z01.PrintRune(r)
+	}
 }
