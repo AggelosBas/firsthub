@@ -1,39 +1,46 @@
 package student
 
 func LoafOfBread(str string) string {
-	if len(str) < 5 {
+	// Αν η είσοδος έχει λιγότερους από 5 μη-space χαρακτήρες
+	count := 0
+	for _, r := range str {
+		if r != ' ' {
+			count++
+		}
+	}
+	if count < 5 {
 		return "Invalid Output\n"
 	}
 
 	result := ""
-	count := 0
 	word := ""
+	skipNext := false
+	nonSpaceCount := 0
 
 	for _, r := range str {
+		if skipNext {
+			skipNext = false
+			continue
+		}
+
 		if r == ' ' {
 			continue
 		}
-		word += string(r)
-		count++
 
-		if count == 5 {
+		word += string(r)
+		nonSpaceCount++
+
+		if nonSpaceCount == 5 {
 			result += word + " "
 			word = ""
-			count = 0
-			// skip 1 character (space or not), if exists
-			if len(str) > 0 {
-				str = str[1:]
-			}
+			nonSpaceCount = 0
+			skipNext = true
 		}
 	}
 
-	if len(result) == 0 {
-		return "Invalid Output\n"
-	}
-
-	// Καθαρίζουμε το τελικό space και προσθέτουμε newline
-	if result[len(result)-1] == ' ' {
+	if len(result) > 0 && result[len(result)-1] == ' ' {
 		result = result[:len(result)-1]
 	}
+
 	return result + "\n"
 }
