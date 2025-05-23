@@ -1,8 +1,12 @@
-package student
+package piscine
 
 func PodiumPosition(podium [][]string) [][]string {
 	n := len(podium)
-	result := make([][]string, n)
+	var result [][]string
+
+	for i := 0; i < n; i++ {
+		result = append(result, []string{})
+	}
 
 	for i := 0; i < n; i++ {
 		result[i] = podium[n-1-i]
