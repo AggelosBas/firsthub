@@ -1,32 +1,33 @@
-package student
+package piscine
 
 func LoafOfBread(str string) string {
-	// Βήμα 1: Αφαίρεση των spaces
-	clean := ""
-	for _, r := range str {
-		if r != ' ' {
-			clean += string(r)
+	s := []rune(str)
+	var rs []rune
+	if len(s) == 0 {
+		return "\n"
+	}
+	if len(s) < 5 {
+		return "Invalid input\n"
+	}
+
+	counter := 0
+	for _, c := range s {
+		if counter == 5 {
+			rs = append(rs, ' ')
+			counter = 0
+			continue
 		}
+		if c == ' ' {
+			continue
+		}
+		rs = append(rs, c)
+		counter++
 	}
 
-	// Αν είναι κάτω από 5 χαρακτήρες, return
-	if len(clean) < 5 {
-		return "Invalid Output\n"
+	for len(rs) > 0 && rs[len(rs)-1] == ' ' {
+		rs = rs[:len(rs)-1]
 	}
 
-	result := ""
-	i := 0
-
-	for i+5 <= len(clean) {
-		// Παίρνουμε 5 χαρακτήρες
-		result += clean[i:i+5] + " "
-		i += 6 // Παραλείπουμε τον 6ο χαρακτήρα
-	}
-
-	// Αφαιρούμε το τελευταίο space (αν υπάρχει) και προσθέτουμε newline
-	if len(result) > 0 && result[len(result)-1] == ' ' {
-		result = result[:len(result)-1]
-	}
-
-	return result + "\n"
+	rs = append(rs, '\n')
+	return string(rs)
 }
