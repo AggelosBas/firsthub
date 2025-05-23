@@ -1,34 +1,28 @@
 package student
 
 func LoafOfBread(str string) string {
-	chars := []rune{}
-	// Αφαιρούμε τα spaces αλλά κρατάμε τα υπόλοιπα
+	// Βήμα 1: φτιάξε string χωρίς κενά
+	cleaned := ""
 	for _, r := range str {
 		if r != ' ' {
-			chars = append(chars, r)
+			cleaned += string(r)
 		}
 	}
 
-	if len(chars) < 5 {
+	// Αν έχει λιγότερους από 5 χαρακτήρες, return
+	if len(cleaned) < 5 {
 		return "Invalid Output\n"
 	}
 
+	// Βήμα 2: πάρε ομάδες των 5 και skip 1
 	result := ""
 	i := 0
-	for i+5 <= len(chars) {
-		// Πάρε 5 χαρακτήρες
-		for j := 0; j < 5; j++ {
-			result += string(chars[i+j])
-		}
-		result += " "
-		i += 6 // Προχώρα 5 και μετά +1 (skip)
+	for i+5 <= len(cleaned) {
+		result += cleaned[i:i+5] + " "
+		i += 6 // 5 + skip 1
 	}
 
-	// Αφαίρεσε το τελευταίο space και βάλε newline
-	if len(result) > 0 {
-		result = result[:len(result)-1] + "\n"
-	} else {
-		result = "Invalid Output\n"
-	}
+	// Βήμα 3: αφαίρεσε το τελευταίο κενό και βάλε \n
+	result = result[:len(result)-1] + "\n"
 	return result
 }
