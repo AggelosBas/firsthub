@@ -1,7 +1,7 @@
-package student
+package piscine
 
 func LoafOfBread(str string) string {
-	// Αφαίρεση των κενών
+	// Αφαιρούμε τα spaces
 	cleaned := ""
 	for _, r := range str {
 		if r != ' ' {
@@ -16,19 +16,13 @@ func LoafOfBread(str string) string {
 	result := ""
 	i := 0
 	for i+5 <= len(cleaned) {
+		// Παίρνουμε 5 χαρακτήρες
 		result += cleaned[i:i+5] + " "
-		i += 6 // μετά από 5 γράμματα, skip 1
+		i += 6 // Προχωράμε 6 θέσεις (skip μετά το 5ο γράμμα)
 	}
 
-	// Αν περισσεύει κάτι στο τέλος που δεν έγινε πεντάδα
-	if i-1 < len(cleaned) {
-		// Προσθέτουμε ό,τι μένει (όχι άλλο skip)
-		remaining := cleaned[i-1:]
-		result += remaining
-	}
-
-	// Αφαίρεση τελευταίου κενού αν υπάρχει
-	if result[len(result)-1] == ' ' {
+	// Αφαιρούμε το τελευταίο space και προσθέτουμε newline
+	if len(result) > 0 && result[len(result)-1] == ' ' {
 		result = result[:len(result)-1]
 	}
 
