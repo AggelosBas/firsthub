@@ -1,4 +1,4 @@
-package piscine
+package student
 
 func PodiumPosition(podium [][]string) [][]string {
 	n := len(podium)
