@@ -1,35 +1,35 @@
-package student
+package piscine
 
 import "github.com/01-edu/z01"
 
 func LoafOfBread(str string) {
-	// Αφαίρεση κενών
-	cleaned := ""
+	// Αφαίρεσε τα κενά
+	clean := ""
 	for _, r := range str {
 		if r != ' ' {
-			cleaned += string(r)
+			clean += string(r)
 		}
 	}
 
-	if len(cleaned) < 5 {
-		for _, r := range "Invalid Output\n" {
+	if len(clean) < 5 {
+		msg := "Invalid Output\n"
+		for _, r := range msg {
 			z01.PrintRune(r)
 		}
 		return
 	}
 
 	i := 0
-	for i+5 <= len(cleaned) {
-		// Εκτύπωσε τους 5 χαρακτήρες
-		for _, r := range cleaned[i : i+5] {
+	count := 0
+	for i+5 <= len(clean) {
+		for _, r := range clean[i : i+5] {
 			z01.PrintRune(r)
 		}
-		// Εκτύπωσε space
-		z01.PrintRune(' ')
-		// Προχώρα 6 θέσεις (οι 5 που πήρες + 1 που αγνοείς)
-		i += 6
+		count++
+		i += 6 // 5 χαρακτήρες + 1 skip
+		if i+5 <= len(clean) {
+			z01.PrintRune(' ')
+		}
 	}
-
-	// Αντικατάσταση του τελευταίου space με newline
 	z01.PrintRune('\n')
 }
