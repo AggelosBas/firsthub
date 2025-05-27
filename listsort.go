@@ -1,3 +1,5 @@
+package student
+
 func ListSort(l *NodeI) *NodeI {
 	if l == nil || l.Next == nil {
 		return l
